@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      background-color: #121212;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      padding: 20px;
+    }
+    h2 {
+      color: #ffffff;
+      font-weight: 600;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+    input[type='number'] {
+      width: 100%;
+      padding: 10px;
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      color: #fff;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #6366f1;
+    }
+    .result {
+      margin-top: 25px;
+      font-size: 16px;
+      background-color: #1e1e1e;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #333;
+    }
+    ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h2>📊 Offer Publishing Profit Simulator</h2>
+  <label for="equity">Equity Share (0-1):</label>
+  <input type="number" id="equity" step="0.01" value="0.5">
+
+  <label for="profit">Monthly Profit per Brand ($):</label>
+  <input type="number" id="profit" value="10000">
+
+  <label for="brands">Brands Launched per Month:</label>
+  <input type="number" id="brands" value="1">
+
+  <label for="months">Months to Project:</label>
+  <input type="number" id="months" value="12">
+
+  <button onclick="calculate()">Calculate</button>
+
+  <div class="result" id="output">← Fill in inputs and click "Calculate" to view projections</div>
+
+  <script>
+    function calculate() {
+      const equity = parseFloat(document.getElementById('equity').value);
+      const profit = parseFloat(document.getElementById('profit').value);
+      const brands = parseInt(document.getElementById('brands').value);
+      const months = parseInt(document.getElementById('months').value);
+
+      let totalProfit = 0;
+      let output = "<strong>Month-by-Month Projection:</strong><br><ul>";
+      for (let i = 1; i <= months; i++) {
+        const cumulativeBrands = i * brands;
+        const monthlyPortfolioProfit = cumulativeBrands * profit;
+        const equityShareProfit = monthlyPortfolioProfit * equity;
+        totalProfit += equityShareProfit;
+        output += `<li><b>Month ${i}:</b> $${equityShareProfit.toLocaleString()}</li>`;
+      }
+      output += `</ul><strong>Total Projected Profit: $${totalProfit.toLocaleString()}</strong>`;
+      document.getElementById('output').innerHTML = output;
+    }
+  </script>
+</body>
+</html>
